@@ -4,11 +4,11 @@ import java.util.*;
 public class QSortRecursionLimitTest {
     // constants to control recursion limit tests
     final static int RECURSION_LIMIT_START = 2;
-    final static int RECURSION_LIMIT_INCREMENT = 2;
+    final static int RECURSION_LIMIT_INCREMENT = 20;
     final static int RECURSION_LIMIT_MAX = 300;
 
     // constants to control size of test arrays
-    final static int ARRAY_SIZE_START = 20000;
+    final static int ARRAY_SIZE_START = 10020000;
     final static int ARRAY_SIZE_MAX = 10020000;
     final static int ARRAY_SIZE_INCREMENT = 500000;
 
@@ -58,14 +58,14 @@ public class QSortRecursionLimitTest {
         }
 
         // keep track of the data
-        ArrayList<ArrayList<Integer>> data = new ArrayList<>();
+        ArrayList<ArrayList<Double>> data = new ArrayList<>();
 
 
         // loop through different sizes for arrays
         for (int size :arraySizes) {
             Integer[] randomArray = fillArrayRandom(size);
 
-            ArrayList<Integer> tempData = new ArrayList<>();
+            ArrayList<Double> tempData = new ArrayList<>();
 
             // loop through for different recursion limits
             for (int recursionLimit: recursionLimits) {
@@ -74,21 +74,23 @@ public class QSortRecursionLimitTest {
 
                 raw.append(recursionLimit);
 
-                int timeInMS = 0;
+                double timeInMS = 0;
 
+                // perform test 3x
+                for (int i = 0; i < 3; i++) {
+                    // copy array to sort
+                    Integer[] tempArray = randomArray.clone();
 
-                // copy array to sort
-                Integer[] tempArray = randomArray.clone();
+                    // measure start and stop time around the mergeSort function
+                    startTime = System.nanoTime();
+                    FHsort.mergeSort(tempArray);
+                    stopTime = System.nanoTime();
 
-                // measure start and stop time around the mergeSort function
-                startTime = System.nanoTime();
-                FHsort.mergeSort(tempArray);
-                stopTime = System.nanoTime();
+                    // convert to ms, truncate to int
+                    timeInMS += ((stopTime * 1.0 - startTime) / NANO_TO_MILLI);
+                }
 
-                // convert to ms, truncate to int
-                timeInMS += (int) ((stopTime - startTime) / NANO_TO_MILLI);
-
-                tempData.add(timeInMS);
+                tempData.add(timeInMS/3);
 
             }
 
