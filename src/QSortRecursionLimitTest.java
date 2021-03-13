@@ -25,7 +25,7 @@ public class QSortRecursionLimitTest {
         Integer[] randomArray = new Integer[size];
 
         for (int i = 0; i < size; i++) {
-            randomArray[i] = (int)(Math.random() * size);
+            randomArray[i] = (int)(Math.random() * Integer.MAX_VALUE);
         }
 
         return randomArray;
@@ -41,48 +41,82 @@ public class QSortRecursionLimitTest {
 
         StringBuilder raw = new StringBuilder();
 
-        // loop through different sizes for arrays
-        for (int recursionLimit = RECURSION_LIMIT_START; recursionLimit <= RECURSION_LIMIT_MAX; recursionLimit = recursionLimit + RECURSION_LIMIT_INCREMENT) {
-            // set recursion limit
-            FHsort.setRecursionLimit(recursionLimit);
+        // keep track of recursion limits
+        ArrayList<Integer> recursionLimits = new ArrayList<>();
 
-            raw.append(recursionLimit);
-            System.out.print(recursionLimit);
+        // populate arraylist
+        for (int recursionLimit = RECURSION_LIMIT_START; recursionLimit <= RECURSION_LIMIT_MAX; recursionLimit = recursionLimit + RECURSION_LIMIT_INCREMENT) {
+            recursionLimits.add(recursionLimit);
+        }
+
+        // keep track of array sizes
+        ArrayList<Integer> arraySizes = new ArrayList<>();
+
+        // populate array sizes
+        for (int size = ARRAY_SIZE_START; size <= ARRAY_SIZE_MAX; size += ARRAY_SIZE_INCREMENT) {
+            arraySizes.add(size);
+        }
+
+        // keep track of the data
+        ArrayList<ArrayList<Integer>> data = new ArrayList<>();
+
+
+        // loop through different sizes for arrays
+        for (int size :arraySizes) {
+            Integer[] randomArray = fillArrayRandom(size);
+
+            ArrayList<Integer> tempData = new ArrayList<>();
 
             // loop through for different recursion limits
-            for (int size = ARRAY_SIZE_START; size <= ARRAY_SIZE_MAX; size += ARRAY_SIZE_INCREMENT) {
+            for (int recursionLimit: recursionLimits) {
+                // set recursion limit
+                FHsort.setRecursionLimit(recursionLimit);
+
+                raw.append(recursionLimit);
+
                 int timeInMS = 0;
 
-                // create auto generated random array of correct size
-                Integer[] randomArray = fillArrayRandom(size);
 
-                // run at least 3 times
-                for (int t = 0; t < 3; t++) {
-                    // copy array to sort
-                    Integer[] tempArray = randomArray.clone();
+                // copy array to sort
+                Integer[] tempArray = randomArray.clone();
 
-                    // measure start and stop time around the mergeSort function
-                    startTime = System.nanoTime();
-                    FHsort.mergeSort(tempArray);
-                    stopTime = System.nanoTime();
+                // measure start and stop time around the mergeSort function
+                startTime = System.nanoTime();
+                FHsort.mergeSort(tempArray);
+                stopTime = System.nanoTime();
 
-                    // convert to ms, truncate to int
-                    timeInMS += (int) ((stopTime - startTime) / NANO_TO_MILLI);
+                // convert to ms, truncate to int
+                timeInMS += (int) ((stopTime - startTime) / NANO_TO_MILLI);
 
-                }
-                raw.append("\t");
-                raw.append(timeInMS);
+                tempData.add(timeInMS);
 
-                System.out.print("\t" + timeInMS);
             }
+
+            data.add(tempData);
+            System.out.println(tempData);
 
             raw.append("\n");
 
-            System.out.print("\n");
-
         }
-        //System.out.println(raw.toString());
+        // print out all the data
 
+        System.out.print("\t");
+        // first print all the column labels
+        for (int size :arraySizes) {
+            System.out.print(size + "\t");
+        }
+        System.out.println();
+
+        // print out recursion limit, then the times for their sizes
+        for (int recursionLimitInd = 0; recursionLimitInd < recursionLimits.size(); recursionLimitInd++) {
+            System.out.print(recursionLimits.get(recursionLimitInd) + "\t");
+
+            for (int sizeInd = 0; sizeInd < arraySizes.size(); sizeInd++) {
+                System.out.print(data.get(sizeInd).get(recursionLimitInd) + "\t");
+            }
+
+            System.out.print("\n");
+        }
 
     }
 
