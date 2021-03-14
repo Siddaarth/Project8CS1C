@@ -13,7 +13,7 @@ src/QSortRecursionLimitTest.java
   -Prints data
 
 src/FHsort.java
-  -Contains sort functions to sort an array of integers from least to greatest including:
+  -Contains sort functions to sort an array from least to greatest including:
     -insertion sort
     -shell sort
     -merge sort
