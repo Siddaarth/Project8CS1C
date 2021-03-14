@@ -1,0 +1,13 @@
+My comments:
+
+I believe the graph reaches its minimum between recursion limits of 8 and 16.
+
+It first decreases(for select array sizes), until recursion limit 8 where it bottoms out until around recursion limit 16 where it only generally rises.
+
+There are many inconsistencies in the runtime that are caused from the randomness of runtime.
+
+For example, the array size of 7.02 million randomly drops off near the end.
+
+There are also many random spikes throughout and drops.
+
+After a recursion limit of 16, runtime is only impacted negatively on average by increasing the recursion limit.

@@ -1,5 +1,14 @@
+/**
+ * Sorts an array using various sorting methods
+ * @author Professor Mazloom
+ */
 public class FHsort
 {
+    /**
+     * Insertion sort
+     * @param a array
+     * @param <E> generic type
+     */
     // insertion sort -----------------------------------------------------
     public static < E extends Comparable< ? super E > >
     void insertionSort(E[] a)
@@ -17,6 +26,11 @@ public class FHsort
         }
     }
 
+    /**
+     * Shell short
+     * @param a array
+     * @param <E> generic type
+     */
     // shell sort #1 -- using shell's outer loop -----------------------
     public static < E extends Comparable< ? super E > >
     void shellSort1(E[] a)
@@ -40,6 +54,16 @@ public class FHsort
     // input array 1:  client[leftPos] ... client[rightPos-1]
     // input array 2:  client[rightPos] ... client[rightStop]
     // working[] array supplied by client to avoid local allocation
+
+    /**
+     * Helper method for merge sort
+     * @param client
+     * @param working
+     * @param leftPos
+     * @param rightPos
+     * @param rightStop
+     * @param <E>
+     */
     protected static < E extends Comparable< ? super E > >
     void merge(E[] client, E[] working,
                int leftPos, int rightPos, int rightStop)
@@ -68,6 +92,14 @@ public class FHsort
             client[rightStop] = working[rightStop];
     }
 
+    /**
+     * Helper of Merge sort
+     * @param a array
+     * @param working working array
+     * @param start
+     * @param stop
+     * @param <E> generic type
+     */
     // mergesort internal function
     protected static < E extends Comparable< ? super E > >
     void mergeSort(E[] a, E[] working, int start, int stop)
@@ -83,6 +115,11 @@ public class FHsort
         merge(a, working, start, rightStart, stop);
     }
 
+    /**
+     * Mergesort public method
+     * @param a array
+     * @param <E> generic type
+     */
     // mergesort public driver
     public static < E extends Comparable< ? super E > >
     void mergeSort(E[] a)
@@ -116,6 +153,11 @@ public class FHsort
         a[hole] = tmp;
     }
 
+    /**
+     * Heapsort
+     * @param a array
+     * @param <E> generic type
+     */
     // heapsort public driver
     public static < E extends Comparable< ? super E > >
     void heapSort(E[] a)
@@ -144,6 +186,14 @@ public class FHsort
     // it leaves the smallest in a[left], the largest in a[right]
     // and median (the pivot) is moved "out-of-the-way" in a[right-1].
     // (a[center] has what used to be in a[right-1])
+    /**
+     * finds median
+     * @param a array
+     * @param left
+     * @param right
+     * @param <E> generic type
+     * @return median
+     */
     protected static < E extends Comparable< ? super E > >
     E median3(E[] a, int left, int right)
     {
@@ -166,6 +216,11 @@ public class FHsort
 
     protected static int QS_RECURSION_LIMIT = 15;
 
+    /**
+     * Sets recursion limit, returns false if not in specified range
+     * @param newLim
+     * @return
+     */
     public static boolean setRecursionLimit(int newLim)
     {
         if (newLim < 2 || newLim > 1000)
@@ -174,6 +229,13 @@ public class FHsort
         return true;
     }
 
+    /**
+     * Protected quicksort
+     * @param a array
+     * @param left
+     * @param right
+     * @param <E> generic type
+     */
     protected static < E extends Comparable< ? super E > >
     void quickSort(E[] a, int left, int right)
     {
@@ -212,6 +274,13 @@ public class FHsort
     }
 
     // private insertion sort that works on sub-arrays --------------
+    /**
+     * private insertion sort that works on sub-arrays
+     * @param a array
+     * @param start start of sub array
+     * @param stop end of sub array
+     * @param <E> generic type
+     */
     protected static < E extends Comparable< ? super E > >
     void insertionSort(E[] a, int start, int stop)
     {
@@ -229,6 +298,11 @@ public class FHsort
     }
 
     // public quicksort
+    /**
+     * Public Quicksort
+     * @param a array
+     * @param <E> generic type
+     */
     public static < E extends Comparable< ? super E > >
     void quickSort( E[] a )
     {

@@ -1,14 +1,18 @@
 import java.security.KeyStore;
 import java.util.*;
 
+/**
+ * Driver class to test out how runtime is impacted from recursion limits and array sizes
+ * @author Siddaarth Prasanna
+ */
 public class QSortRecursionLimitTest {
     // constants to control recursion limit tests
     final static int RECURSION_LIMIT_START = 2;
-    final static int RECURSION_LIMIT_INCREMENT = 20;
+    final static int RECURSION_LIMIT_INCREMENT = 2;
     final static int RECURSION_LIMIT_MAX = 300;
 
     // constants to control size of test arrays
-    final static int ARRAY_SIZE_START = 10020000;
+    final static int ARRAY_SIZE_START = 20000;
     final static int ARRAY_SIZE_MAX = 10020000;
     final static int ARRAY_SIZE_INCREMENT = 500000;
 
@@ -38,8 +42,6 @@ public class QSortRecursionLimitTest {
     public static void main(String[] args) {
         // variables to keep track of start and stop time for each sort
         long startTime, stopTime;
-
-        StringBuilder raw = new StringBuilder();
 
         // keep track of recursion limits
         ArrayList<Integer> recursionLimits = new ArrayList<>();
@@ -72,8 +74,6 @@ public class QSortRecursionLimitTest {
                 // set recursion limit
                 FHsort.setRecursionLimit(recursionLimit);
 
-                raw.append(recursionLimit);
-
                 double timeInMS = 0;
 
                 // perform test 3x
@@ -83,7 +83,7 @@ public class QSortRecursionLimitTest {
 
                     // measure start and stop time around the mergeSort function
                     startTime = System.nanoTime();
-                    FHsort.mergeSort(tempArray);
+                    FHsort.quickSort(tempArray);
                     stopTime = System.nanoTime();
 
                     // convert to ms, truncate to int
@@ -96,8 +96,6 @@ public class QSortRecursionLimitTest {
 
             data.add(tempData);
             System.out.println(tempData);
-
-            raw.append("\n");
 
         }
         // print out all the data
@@ -119,9 +117,5 @@ public class QSortRecursionLimitTest {
 
             System.out.print("\n");
         }
-
     }
-
-
-
 }
